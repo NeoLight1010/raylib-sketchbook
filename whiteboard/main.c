@@ -29,9 +29,14 @@ int main() {
   EndTextureMode();
 
   while (!WindowShouldClose()) {
-    // Brush color control
+    // Brush control
     if (IsKeyPressed(KEY_C))
-      swapMainColors(&primaryColor, &secondaryColor);
+      swapMainColors(&primaryColor, &secondaryColor); // Brush color
+
+    if (IsKeyPressed(KEY_X) && brushSize < 25)
+      brushSize += 5;
+    if (IsKeyPressed(KEY_Z) && brushSize > 5)
+      brushSize -= 5; // Brush size
 
     // Move brush
     if (IsKeyDown(KEY_UP))
