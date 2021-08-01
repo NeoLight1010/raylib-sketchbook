@@ -21,6 +21,13 @@ int main() {
   float brushSize = 15;
   float brushVelocity = 1;
 
+  RenderTexture2D canvas = LoadRenderTexture(W, H);
+
+  // Clear canvas.
+  BeginTextureMode(canvas);
+  ClearBackground(RAYWHITE);
+  EndTextureMode();
+
   while (!WindowShouldClose()) {
     // Brush color control
     if (IsKeyPressed(KEY_C))
@@ -36,10 +43,18 @@ int main() {
     if (IsKeyDown(KEY_LEFT))
       brushCoords.x -= brushVelocity;
 
+    // Update canvas.
+    BeginTextureMode(canvas);
+    DrawCircleV(brushCoords, brushSize, primaryColor);
+    EndTextureMode();
+
     // Drawing
     BeginDrawing();
 
-    DrawCircleV(brushCoords, brushSize, primaryColor);
+    DrawTextureRec(canvas.texture,
+                   (Rectangle){0, 0, (float)canvas.texture.width,
+                               (float)-canvas.texture.height},
+                   (Vector2){0, 0}, RAYWHITE);
 
     EndDrawing();
   }
