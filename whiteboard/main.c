@@ -54,7 +54,9 @@ int main() {
     DrawTextureRec(canvas.texture,
                    (Rectangle){0, 0, (float)canvas.texture.width,
                                (float)-canvas.texture.height},
-                   (Vector2){0, 0}, RAYWHITE);
+                   (Vector2){0, 0}, RAYWHITE); // Draw canvas
+
+    DrawCircleLines(brushCoords.x, brushCoords.y, brushSize, BLACK); // Cursor
 
     EndDrawing();
   }
