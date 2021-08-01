@@ -5,7 +5,11 @@ find_package(raylib 3.0 REQUIRED) # Requires at least version 3.0
 
 set(CMAKE_C_STANDARD 11) # Requires C11 standard
 
-add_executable(${PROJECT_NAME} main.c)
+file(GLOB_RECURSE PROJECT_SOURCES CONFIGURE_DEPENDS "src/*.c")
+file(GLOB_RECURSE PROJECT_HEADERS CONFIGURE_DEPENDS "src/*.h")
+
+add_executable(${PROJECT_NAME} ${PROJECT_SOURCES})
+target_include_directories(${PROJECT_NAME} PUBLIC ${PROJECT_HEADERS})
 
 target_link_libraries(${PROJECT_NAME} raylib)
 
