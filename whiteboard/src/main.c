@@ -1,12 +1,6 @@
+#include "struct/Brush.h"
 #include <raylib.h>
 #include <stdio.h>
-
-void swapMainColors(Color *primary, Color *secondary) {
-  Color temp = *primary;
-
-  *primary = *secondary;
-  *secondary = temp;
-}
 
 int main() {
   const int W = 800;
@@ -14,12 +8,7 @@ int main() {
 
   InitWindow(W, H, "Whiteboard");
 
-  Color primaryColor = RED;
-  Color secondaryColor = RAYWHITE;
-
-  Vector2 brushCoords = {(float)W / 2, (float)H / 2};
-  float brushSize = 15;
-  float brushVelocity = 1;
+  Brush brush = {(Vector2){(float)W / 2, (float)H / 2}, RED, RAYWHITE, 15, 1};
 
   RenderTexture2D canvas = LoadRenderTexture(W, H);
 
@@ -31,26 +20,26 @@ int main() {
   while (!WindowShouldClose()) {
     // Brush control
     if (IsKeyPressed(KEY_C))
-      swapMainColors(&primaryColor, &secondaryColor); // Brush color
+      brushSwapColors(&brush);
 
-    if (IsKeyPressed(KEY_X) && brushSize < 25)
-      brushSize += 5;
-    if (IsKeyPressed(KEY_Z) && brushSize > 5)
-      brushSize -= 5; // Brush size
+    if (IsKeyPressed(KEY_X) && brush.size < 25)
+      brush.size += 5;
+    if (IsKeyPressed(KEY_Z) && brush.size > 5)
+      brush.size -= 5; // Brush size
 
     // Move brush
     if (IsKeyDown(KEY_UP))
-      brushCoords.y -= brushVelocity;
+      brush.coords.y -= brush.velocity;
     if (IsKeyDown(KEY_DOWN))
-      brushCoords.y += brushVelocity;
+      brush.coords.y += brush.velocity;
     if (IsKeyDown(KEY_RIGHT))
-      brushCoords.x += brushVelocity;
+      brush.coords.x += brush.velocity;
     if (IsKeyDown(KEY_LEFT))
-      brushCoords.x -= brushVelocity;
+      brush.coords.x -= brush.velocity;
 
     // Update canvas.
     BeginTextureMode(canvas);
-    DrawCircleV(brushCoords, brushSize, primaryColor);
+    DrawCircleV(brush.coords, brush.size, brush.primaryColor);
     EndTextureMode();
 
     // Drawing
@@ -61,7 +50,8 @@ int main() {
                                (float)-canvas.texture.height},
                    (Vector2){0, 0}, RAYWHITE); // Draw canvas
 
-    DrawCircleLines(brushCoords.x, brushCoords.y, brushSize, BLACK); // Cursor
+    DrawCircleLines(brush.coords.x, brush.coords.y, brush.size,
+                    BLACK); // Cursor
 
     EndDrawing();
   }
