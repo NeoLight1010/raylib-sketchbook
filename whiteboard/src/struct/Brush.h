@@ -14,5 +14,6 @@ typedef struct Brush {
 } Brush;
 
 void brushSwapColors(Brush *brush);
+void brushApplyDefaultControls(Brush *brush);
 
 #endif
