@@ -8,7 +8,7 @@ int main() {
 
   InitWindow(W, H, "Whiteboard");
 
-  Brush brush = {(Vector2){(float)W / 2, (float)H / 2}, RED, RAYWHITE, 15, 1};
+  Brush brush = {(Vector2){(float)W / 2, (float)H / 2}, RED, RAYWHITE, 15, 0.1};
 
   RenderTexture2D canvas = LoadRenderTexture(W, H);
 
